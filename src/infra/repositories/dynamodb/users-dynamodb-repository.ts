@@ -1,5 +1,5 @@
+import { UsersRepository } from "../../../application/repositories/users-repository";
 import { User } from "../../../domain/entities/user";
-import { UsersRepository } from "../../../domain/repositories/users-repository";
 import { config } from "../../config/configuration";
 import { DynamoDBService } from "../../services/aws/dynamodb-service";
 import { DynamoDbUsersMapper } from "./mappers/dynamoDb-users-mapper";
@@ -16,16 +16,21 @@ export class UsersDynamoDbRepository implements UsersRepository {
     );
   }
 
-  async findByCpf(email: string): Promise<any | null> {
-    const user = await this.dynamoDbService.get(
+  async findOne(cpf: string): Promise<any | null> {
+    const databaseUser = await this.dynamoDbService.query(
       config.dynamoDB.usersTableName,
-      { email: { S: email } }
+      "CpfIndex",
+      {
+        cpf: {
+          S: cpf,
+        },
+      }
     );
 
-    if (!user) {
+    if (!databaseUser || !databaseUser.length) {
       return null;
     }
 
-    return user;
+    return DynamoDbUsersMapper.findOneDatabaseToDomain(databaseUser[0] as any);
   }
 }
