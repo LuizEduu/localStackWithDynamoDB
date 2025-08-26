@@ -4,9 +4,14 @@ Content-Type: application/json
 {
     "name": "Luiz",
     "email": "test2@gmail.com",
-    "cpf": "12345678918"
+    "cpf": "12345678921"
 }
 
 ###
 GET http://localhost:3001/users/12345678914
 Content-Type: application/json
+###
+
+GET http://localhost:3001/users?page=1&limit=10
+Content-Type: application/json
+###

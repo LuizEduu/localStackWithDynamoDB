@@ -3,6 +3,7 @@ import {
   GetItemCommand,
   PutItemCommand,
   QueryCommand,
+  ScanCommand,
 } from "@aws-sdk/client-dynamodb";
 
 export class DynamoDBService {
@@ -50,5 +51,54 @@ export class DynamoDBService {
     const response = await this.dynamoDBClient.send(new QueryCommand(params));
 
     return response.Items;
+  }
+
+  async scan(
+    tableName: string,
+    options?: {
+      limit?: number;
+      exclusiveStartKey?: any;
+      projectionExpression?: string;
+      expressionAttributeNames?: Record<string, string>;
+      filterExpression?: string;
+      expressionAttributeValues?: Record<string, any>;
+    }
+  ) {
+    const params: any = {
+      TableName: tableName,
+    };
+
+    if (options?.limit) {
+      params.Limit = options.limit;
+    }
+
+    if (options?.exclusiveStartKey) {
+      params.ExclusiveStartKey = options.exclusiveStartKey;
+    }
+
+    if (options?.projectionExpression) {
+      params.ProjectionExpression = options.projectionExpression;
+    }
+
+    if (options?.expressionAttributeNames) {
+      params.ExpressionAttributeNames = options.expressionAttributeNames;
+    }
+
+    if (options?.filterExpression) {
+      params.FilterExpression = options.filterExpression;
+    }
+
+    if (options?.expressionAttributeValues) {
+      params.ExpressionAttributeValues = options.expressionAttributeValues;
+    }
+
+    const response = await this.dynamoDBClient.send(new ScanCommand(params));
+
+    return {
+      Items: response.Items || [],
+      LastEvaluatedKey: response.LastEvaluatedKey,
+      Count: response.Count,
+      ScannedCount: response.ScannedCount,
+    };
   }
 }

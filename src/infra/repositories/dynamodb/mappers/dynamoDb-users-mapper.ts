@@ -17,7 +17,7 @@ export class DynamoDbUsersMapper {
     };
   }
 
-  static findOneDatabaseToDomain(user: findOneDatabaseToDomainUser): User {
-    return User.create(user.cpf.S, user.name.S, user.email.S, user.id.S);
+  static databaseToDomain(user: findOneDatabaseToDomainUser): User {
+    return User.create(user.name.S, user.email.S, user.cpf.S, user.id.S);
   }
 }

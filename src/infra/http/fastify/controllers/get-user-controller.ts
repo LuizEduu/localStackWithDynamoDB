@@ -1,9 +1,9 @@
 import { FastifyRequest, FastifyReply } from "fastify";
-import { makeGetUserUseCase } from "../../../factories/make-get-user-use-case";
 import { ResourceNotFoundError } from "../../../../core/errors/resource-not-found";
 import { UserPresenter } from "../presenters/user-presenter";
 import { GetUserResponse } from "../dto/get-user-response";
 import { GetUserRequest } from "../dto/get-user-request";
+import { makeGetUserUseCase } from "../../../factories/make-get-user-use-case";
 
 export async function getUserController(
   request: FastifyRequest<{ Params: GetUserRequest }>,

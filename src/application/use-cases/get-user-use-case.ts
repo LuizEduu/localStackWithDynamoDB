@@ -10,7 +10,6 @@ export class GetUserUseCase {
   async execute({
     cpf,
   }: GetUserUseCaseRequest): Promise<GetUserUseCaseResponse> {
-    console.log(cpf);
     const user = await this.usersRepository.findOne(cpf);
 
     if (!user) {
