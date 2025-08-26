@@ -1,8 +1,12 @@
-POST http://localhost:3000/users
+POST http://localhost:3001/users
 Content-Type: application/json
 
 {
     "name": "Luiz",
-    "email": "test@gmail.com",
-    "cpf": "12345678910"
+    "email": "test2@gmail.com",
+    "cpf": "12345678918"
 }
+
+###
+GET http://localhost:3001/users/12345678914
+Content-Type: application/json

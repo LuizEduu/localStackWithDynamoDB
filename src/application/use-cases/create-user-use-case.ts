@@ -20,6 +20,7 @@ export class CreateUserUseCase {
     }
 
     const user = User.create(name, email, cpf);
+
     await this.usersRepository.create(user);
 
     return right({

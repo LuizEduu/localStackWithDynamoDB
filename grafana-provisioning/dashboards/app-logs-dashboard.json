@@ -1,0 +1,42 @@
+{
+  "id": null,
+  "title": "Application Logs",
+  "tags": ["logs"],
+  "timezone": "browser",
+  "panels": [
+    {
+      "id": 1,
+      "title": "Application Logs",
+      "type": "logs",
+      "targets": [
+        {
+          "expr": "{job=\"containerlogs\"}",
+          "refId": "A"
+        }
+      ],
+      "gridPos": {
+        "h": 20,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "options": {
+        "showTime": true,
+        "showLabels": true,
+        "showCommonLabels": false,
+        "wrapLogMessage": true,
+        "prettifyLogMessage": false,
+        "enableLogDetails": true,
+        "dedupStrategy": "none",
+        "sortOrder": "Descending"
+      }
+    }
+  ],
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "refresh": "5s",
+  "version": 1,
+  "schemaVersion": 30
+}

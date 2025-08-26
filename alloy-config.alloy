@@ -1,0 +1,93 @@
+// Alloy configuration migrated from promtail-config.yml
+
+// Loki client configuration
+loki.write "default" {
+    endpoint {
+        url = "http://loki:3100/loki/api/v1/push"
+    }
+}
+
+// Container logs scraping
+local.file_match "containers" {
+    path_targets = [{"__path__" = "/var/lib/docker/containers/*/*log"}]
+}
+
+loki.source.file "containers" {
+    targets    = local.file_match.containers.targets
+    forward_to = [loki.process.containers.receiver]
+}
+
+loki.process "containers" {
+    forward_to = [loki.write.default.receiver]
+
+    stage.json {
+        expressions = {
+            output = "log",
+            stream = "stream", 
+            attrs  = "",
+        }
+    }
+
+    stage.json {
+        source = "attrs"
+        expressions = {
+            tag = "",
+        }
+    }
+
+    stage.regex {
+        source     = "tag"
+        expression = "(?P<container_name>(?:[^|]*))|"
+    }
+
+    stage.timestamp {
+        source = "time"
+        format = "RFC3339Nano"
+    }
+
+    stage.labels {
+        values = {
+            job            = "containerlogs",
+            stream         = "",
+            container_name = "",
+        }
+    }
+
+    stage.output {
+        source = "output"
+    }
+}
+
+// Application logs scraping  
+local.file_match "application" {
+    path_targets = [{"__path__" = "/var/log/app/*.log"}]
+}
+
+loki.source.file "application" {
+    targets    = local.file_match.application.targets
+    forward_to = [loki.process.application.receiver]
+}
+
+loki.process "application" {
+    forward_to = [loki.write.default.receiver]
+
+    stage.timestamp {
+        source = "timestamp"
+        format = "RFC3339"
+    }
+
+    stage.json {
+        expressions = {
+            level     = "level",
+            message   = "msg",
+            timestamp = "timestamp",
+        }
+    }
+
+    stage.labels {
+        values = {
+            job   = "application",
+            level = "",
+        }
+    }
+}

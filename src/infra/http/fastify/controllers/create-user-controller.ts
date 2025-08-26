@@ -2,30 +2,34 @@ import { FastifyRequest, FastifyReply } from "fastify";
 import { makeCreateUserUseCase } from "../../../factories/make-create-user-use-case";
 import { CreateUserRequest } from "../dto/create-user-request";
 import { UserAlreadyExistsError } from "../../../../application/use-cases/errors/user-already-exists-error";
+import { CreateUserResponse } from "../dto/create-user-response";
+import { UserPresenter } from "../presenters/user-presenter";
 
 export async function createUserController(
   request: FastifyRequest<{ Body: CreateUserRequest }>,
-  reply: FastifyReply
+  reply: FastifyReply<{
+    Reply: CreateUserResponse;
+  }>
 ) {
   const { name, email, cpf } = request.body;
 
   const useCase = makeCreateUserUseCase();
 
-  const { isLeft, value } = await useCase.execute({
+  const result = await useCase.execute({
     name,
     email,
     cpf,
   });
 
-  if (isLeft()) {
-    if (value instanceof UserAlreadyExistsError) {
-      return reply.status(409).send({ message: value.message });
+  if (result.isLeft()) {
+    if (result.value instanceof UserAlreadyExistsError) {
+      return reply.status(409).send({ message: result.value.message });
     } else {
       return reply.status(500).send({ message: "Internal Server Error" });
     }
   }
 
   return reply.status(201).send({
-    user: value,
+    user: UserPresenter.toHttp(result.value.user),
   });
 }

@@ -35,14 +35,20 @@ export class DynamoDBService {
     const params = {
       TableName: tableName,
       IndexName: indexName,
-      KeyConditionExpression: Object.keys(keyCondition).map(key => `${key} = :${key}`).join(' AND '),
-      ExpressionAttributeValues: Object.keys(keyCondition).reduce((acc, key) => {
-        acc[`:${key}`] = keyCondition[key];
-        return acc;
-      }, {} as any)
+      KeyConditionExpression: Object.keys(keyCondition)
+        .map((key) => `${key} = :${key}`)
+        .join(" AND "),
+      ExpressionAttributeValues: Object.keys(keyCondition).reduce(
+        (acc, key) => {
+          acc[`:${key}`] = keyCondition[key];
+          return acc;
+        },
+        {} as any
+      ),
     };
 
     const response = await this.dynamoDBClient.send(new QueryCommand(params));
+
     return response.Items;
   }
 }

@@ -7,7 +7,7 @@ const envSchema = z.object({
   DYNAMODB_ENDPOINT: z.url("DYNAMODB_ENDPOINT must be a valid URL"),
   PORT: z
     .string()
-    .default("3000")
+    .default("3001")
     .transform((val) => parseInt(val, 10)),
 });
 

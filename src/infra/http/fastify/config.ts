@@ -3,6 +3,7 @@ import Fastify, { FastifyInstance } from "fastify";
 import { validateEnv } from "../../config/env-validation";
 import fastifySensible from "@fastify/sensible";
 import { routes } from "./routes";
+import fastifyMetrics from "fastify-metrics";
 
 let envConfig: Record<string, any>;
 try {
@@ -14,10 +15,35 @@ try {
 }
 
 let server: FastifyInstance = Fastify({
-  logger: true,
+  logger: {
+    level: "info",
+    serializers: {
+      req(request) {
+        return {
+          method: request.method,
+          url: request.url,
+          path: request.url,
+          parameters: request.params,
+          headers: request.headers,
+        };
+      },
+      res(response) {
+        return {
+          statusCode: response.statusCode,
+        };
+      },
+    },
+  },
 });
 
 server = routes(server);
 server.register(fastifySensible);
+
+server.register(fastifyMetrics, {
+  endpoint: "/metrics",
+  routeMetrics: {
+    enabled: true,
+  },
+});
 
 export { server, envConfig };
