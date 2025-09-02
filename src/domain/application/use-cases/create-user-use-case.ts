@@ -1,6 +1,6 @@
-import { left, right } from "../../core/either";
-import { User } from "../../domain/entities/user";
-import { CreateUserRequest } from "../../infra/http/fastify/dto/create-user-request";
+import { left, right } from "../../../core/either";
+import { User } from "../../entities/user";
+import { CreateUserRequest } from "../../../infra/http/fastify/dto/create-user-request";
 import { UsersRepository } from "../repositories/users-repository";
 import { CreateUserResponseUseCase } from "./dto/create-user-response-use-case";
 import { UserAlreadyExistsError } from "./errors/user-already-exists-error";

@@ -1,4 +1,4 @@
-import { UsersRepository } from "../../src/application/repositories/users-repository";
+import { UsersRepository } from "../../src/domain/application/repositories/users-repository";
 import { PaginationParams } from "../../src/core/pagination/pagination";
 import { User } from "../../src/domain/entities/user";
 

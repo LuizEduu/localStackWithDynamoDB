@@ -1,7 +1,7 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { makeCreateUserUseCase } from "../../../factories/make-create-user-use-case";
 import { CreateUserRequest } from "../dto/create-user-request";
-import { UserAlreadyExistsError } from "../../../../application/use-cases/errors/user-already-exists-error";
+import { UserAlreadyExistsError } from "../../../../domain/application/use-cases/errors/user-already-exists-error";
 import { CreateUserResponse } from "../dto/create-user-response";
 import { UserPresenter } from "../presenters/user-presenter";
 

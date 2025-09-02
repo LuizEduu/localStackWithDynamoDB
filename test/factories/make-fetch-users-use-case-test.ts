@@ -1,9 +1,9 @@
-import { CreateUserUseCase } from "../../src/domain/application/use-cases/create-user-use-case";
+import { FetchUsersUseCase } from "../../src/domain/application/use-cases/fetch-users-use-case";
 import { InMemoryUsersRepository } from "../repositories/in-memory-users-repository";
 
-export function makeCreateUserUseCaseTest() {
+export function makeFetchUsersUseCase() {
   const inMemoryUsersRepository = new InMemoryUsersRepository();
-  const createUserUseCase = new CreateUserUseCase(inMemoryUsersRepository);
+  const createUserUseCase = new FetchUsersUseCase(inMemoryUsersRepository);
 
   return {
     inMemoryUsersRepository,

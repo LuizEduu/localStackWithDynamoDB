@@ -1,4 +1,4 @@
-import { right } from "../../core/either";
+import { right } from "../../../core/either";
 import { UsersRepository } from "../repositories/users-repository";
 import { FetchUsersRequestUseCase } from "./dto/fetch-users-request-use-case";
 import { FetchUsersResponseUseCase } from "./dto/fetch-users-response-use-case";

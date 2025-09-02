@@ -1,6 +1,6 @@
-import { makeCreateUserUseCaseTest } from "../../../test/factories/make-create-user-use-case-test";
-import { InMemoryUsersRepository } from "../../../test/repositories/in-memory-users-repository";
-import { User } from "../../domain/entities/user";
+import { makeCreateUserUseCaseTest } from "../../../../test/factories/make-create-user-use-case-test";
+import { InMemoryUsersRepository } from "../../../../test/repositories/in-memory-users-repository";
+import { User } from "../../entities/user";
 import { CreateUserUseCase } from "./create-user-use-case";
 import { faker } from "@faker-js/faker";
 import { UserAlreadyExistsError } from "./errors/user-already-exists-error";

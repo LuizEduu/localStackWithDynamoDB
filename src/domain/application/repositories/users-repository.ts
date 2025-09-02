@@ -1,5 +1,5 @@
-import { PaginationParams } from "../../core/pagination/pagination";
-import { User } from "../../domain/entities/user";
+import { PaginationParams } from "../../../core/pagination/pagination";
+import { User } from "../../entities/user";
 
 export abstract class UsersRepository {
   abstract create(user: User): Promise<void>;

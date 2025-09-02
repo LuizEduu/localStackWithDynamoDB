@@ -1,5 +1,5 @@
-import { left, right } from "../../core/either";
-import { ResourceNotFoundError } from "../../core/errors/resource-not-found";
+import { left, right } from "../../../core/either";
+import { ResourceNotFoundError } from "../../../core/errors/resource-not-found";
 import { UsersRepository } from "../repositories/users-repository";
 import { GetUserUseCaseRequest } from "./dto/get-user-request-use-case";
 import { GetUserUseCaseResponse } from "./dto/get-user-response-use-case";

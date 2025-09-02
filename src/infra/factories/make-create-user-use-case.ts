@@ -1,4 +1,4 @@
-import { CreateUserUseCase } from "../../application/use-cases/create-user-use-case";
+import { CreateUserUseCase } from "../../domain/application/use-cases/create-user-use-case";
 import { dynamoDBClient } from "../config/aws/dynamodb-config";
 import { UsersDynamoDbRepository } from "../repositories/dynamodb/users-dynamodb-repository";
 import { DynamoDBService } from "../services/aws/dynamodb-service";
