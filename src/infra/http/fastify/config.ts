@@ -4,6 +4,7 @@ import { validateEnv } from "../../config/env-validation";
 import fastifySensible from "@fastify/sensible";
 import { routes } from "./routes";
 import fastifyMetrics from "fastify-metrics";
+import multipart from "@fastify/multipart";
 
 let envConfig: Record<string, any>;
 try {
@@ -36,8 +37,14 @@ let server: FastifyInstance = Fastify({
   },
 });
 
-server = routes(server);
 server.register(fastifySensible);
+server.register(multipart, {
+  limits: {
+    fileSize: 2 * 1024 * 1024,
+    files: 1,
+  },
+});
+server = routes(server);
 
 server.register(fastifyMetrics, {
   endpoint: "/metrics",
